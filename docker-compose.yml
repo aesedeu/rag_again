@@ -1,0 +1,16 @@
+version: '3.9'
+
+services:
+  vectorstore:
+    container_name: chromadb-container
+    image: chromadb/chroma:latest
+    # volumes:
+    #   - ./chroma-data:/chroma/chroma
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8000/api/v1/heartbeat" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
